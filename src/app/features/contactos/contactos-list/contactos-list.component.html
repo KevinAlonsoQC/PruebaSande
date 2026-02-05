@@ -1,0 +1,61 @@
+<div class="container page">
+    <div>
+        <h1 class="page__title">Contactos</h1>
+        <p class="page__hint">Gestión básica con permisos por perfil</p>
+    </div>
+
+    <div class="card">
+        <div class="card__header">
+            <div class="row" style="width:100%">
+                <span class="badge">Perfil: {{ perfil }}</span>
+                <span class="spacer"></span>
+
+                <button class="btn btn--primary" *ngIf="canCreate" (click)="goNuevo()">
+                    Nuevo
+                </button>
+                <button class="btn btn--ghost" (click)="logout()">Cerrar sesión</button>
+            </div>
+        </div>
+
+        <div class="card__body">
+            <div class="state" *ngIf="loading">Cargando contactos…</div>
+            <p class="error" *ngIf="error">{{ error }}</p>
+
+            <div *ngIf="!loading && contactos?.length === 0" class="state">
+                No hay contactos para mostrar.
+            </div>
+
+            <table class="table" *ngIf="!loading && contactos?.length">
+                <thead>
+                    <tr>
+                        <th>idContacto</th>
+                        <th>rutContacto</th>
+                        <th>nombreContacto</th>
+                        <th style="width: 220px;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let c of contactos">
+                        <td>{{ c.idContacto }}</td>
+                        <td>{{ c.rutContacto }}</td>
+                        <td>{{ c.nombreContacto }}</td>
+                        <td>
+                            <div class="row">
+                                <button class="btn btn--ghost" *ngIf="canEdit" (click)="goEditar(c.idContacto)">
+                                    Editar
+                                </button>
+                                <button class="btn btn--danger" *ngIf="canDelete" (click)="eliminar(c.idContacto)">
+                                    Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="help" style="margin-top:12px">
+                Tip: El botón <b>Eliminar</b> solo aparece en perfil <b>1</b>.
+            </p>
+        </div>
+    </div>
+</div>

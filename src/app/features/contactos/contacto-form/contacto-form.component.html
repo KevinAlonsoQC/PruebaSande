@@ -1,0 +1,67 @@
+<div class="container page">
+    <div>
+        <h1 class="page__title">{{ isEdit ? 'Editar contacto' : 'Nuevo contacto' }}</h1>
+        <p class="page__hint">
+            {{ isEdit ? 'Actualiza la información del contacto.' : 'Registra un nuevo contacto en el sistema.' }}
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card__header">
+            <span class="badge">{{ isEdit ? 'Edición' : 'Creación' }}</span>
+            <span class="spacer"></span>
+            <button class="btn btn--ghost" type="button" (click)="back()">Volver</button>
+        </div>
+
+        <div class="card__body">
+            <form class="stack" [formGroup]="form" (ngSubmit)="save()">
+                <div class="row" style="gap: 14px;">
+                    <div class="field" style="flex:1; min-width: 220px;">
+                        <label class="label">RUT</label>
+                        <input class="input" formControlName="rutContacto" [readonly]="isEdit"
+                            placeholder="12.345.678-9" />
+                        <p class="error" *ngIf="form.controls.rutContacto.touched && form.controls.rutContacto.invalid">
+                            RUT requerido
+                        </p>
+                    </div>
+
+                    <div class="field" style="flex:2; min-width: 260px;">
+                        <label class="label">Nombre</label>
+                        <input class="input" formControlName="nombreContacto" placeholder="Nombre del contacto" />
+                        <p class="error"
+                            *ngIf="form.controls.nombreContacto.touched && form.controls.nombreContacto.invalid">
+                            Nombre requerido
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row" style="gap: 14px;">
+                    <div class="field" style="flex:1; min-width: 220px;">
+                        <label class="label">Abreviación</label>
+                        <input class="input" formControlName="abreviacion" placeholder="Ej: SR, SRA, ING…" />
+                    </div>
+
+                    <div class="field" style="flex:1; min-width: 220px;">
+                        <label class="label">Teléfono</label>
+                        <input class="input" formControlName="telefono" placeholder="+56 9 1234 5678" />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Email</label>
+                    <input class="input" formControlName="email" placeholder="correo@dominio.com" />
+                </div>
+
+                <div class="row" style="margin-top: 6px;">
+                    <button class="btn btn--primary" type="submit" [disabled]="form.invalid || loading">
+                        {{ loading ? 'Guardando…' : (isEdit ? 'Actualizar' : 'Crear') }}
+                    </button>
+
+                    <button class="btn btn--ghost" type="button" (click)="back()">Cancelar</button>
+                </div>
+
+                <p class="error" *ngIf="error">{{ error }}</p>
+            </form>
+        </div>
+    </div>
+</div>

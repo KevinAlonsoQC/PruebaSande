@@ -1,1 +1,284 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --bg: #0b0f0d;
+    --panel: #111815;
+    --panel-2: #0f1412;
+    --text: #eaf3ee;
+    --muted: #b3c3bb;
+    --border: rgba(234, 243, 238, 0.12);
+
+    --primary: #0f3d2e;
+    --primary-2: #166b4f;
+    --accent: #22c55e;
+    --danger: #ef4444;
+
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    --radius: 14px;
+    --radius-sm: 10px;
+
+    --container: 1100px;
+
+    --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", "Noto Sans";
+    --h1: clamp(24px, 2.2vw, 34px);
+    --h2: clamp(18px, 1.6vw, 24px);
+    --base: 15px;
+    --small: 13px;
+    --line: 1.5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    background: radial-gradient(1200px 800px at 20% -10%, rgba(34, 197, 94, 0.14), transparent 55%),
+        radial-gradient(1000px 600px at 90% 0%, rgba(15, 61, 46, 0.25), transparent 60%),
+        var(--bg);
+    color: var(--text);
+    font-size: var(--base);
+    line-height: var(--line);
+}
+
+/* Contenedor general */
+.container {
+    width: min(100% - 32px, var(--container));
+    margin: 0 auto;
+    padding: 28px 0;
+}
+
+/* Card / panel */
+.card {
+    background: linear-gradient(180deg, rgba(17, 24, 21, 0.9), rgba(15, 20, 18, 0.85));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.card__header {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.card__body {
+    padding: 18px 20px;
+}
+
+.title {
+    margin: 0;
+    font-size: var(--h2);
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.subtitle {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: var(--small);
+}
+
+/* Layout helpers */
+.stack {
+    display: grid;
+    gap: 12px;
+}
+
+.row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.spacer {
+    flex: 1;
+}
+
+/* Badge (perfil) */
+.badge {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    color: var(--text);
+}
+
+/* Inputs */
+.field {
+    display: grid;
+    gap: 6px;
+}
+
+.label {
+    font-size: var(--small);
+    color: var(--muted);
+}
+
+.input {
+    width: 100%;
+    padding: 12px 12px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(234, 243, 238, 0.12);
+    color: var(--text);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s, background .15s;
+}
+
+.input::placeholder {
+    color: rgba(179, 195, 187, 0.6);
+}
+
+.input:focus {
+    border-color: rgba(34, 197, 94, 0.55);
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.input[readonly] {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+/* Help / error text */
+.help {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.error {
+    margin: 0;
+    font-size: 12px;
+    color: #fecaca;
+}
+
+/* Buttons */
+.btn {
+    appearance: none;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .05s ease, background .15s, border-color .15s, opacity .15s;
+    user-select: none;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn--primary {
+    background: linear-gradient(180deg, rgba(22, 107, 79, 0.92), rgba(15, 61, 46, 0.92));
+    border-color: rgba(34, 197, 94, 0.22);
+}
+
+.btn--primary:hover {
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.18), rgba(15, 61, 46, 0.92));
+    border-color: rgba(34, 197, 94, 0.4);
+}
+
+.btn--ghost {
+    border-color: rgba(234, 243, 238, 0.12);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(234, 243, 238, 0.2);
+}
+
+.btn--danger {
+    border-color: rgba(239, 68, 68, 0.35);
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.btn--danger:hover {
+    background: rgba(239, 68, 68, 0.14);
+}
+
+.btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* Table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+}
+
+.table th,
+.table td {
+    padding: 12px 12px;
+    border-bottom: 1px solid rgba(234, 243, 238, 0.08);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.table th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.table tr:hover td {
+    background: rgba(34, 197, 94, 0.05);
+}
+
+.table td {
+    font-size: 14px;
+}
+
+/* Empty / loading */
+.state {
+    padding: 12px;
+    border: 1px dashed rgba(234, 243, 238, 0.18);
+    border-radius: var(--radius-sm);
+    color: var(--muted);
+}
+
+/* Page header */
+.page {
+    display: grid;
+    gap: 14px;
+}
+
+.page__title {
+    margin: 0;
+    font-size: var(--h1);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.page__hint {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--small);
+}
+
+/* Login centering */
+.center {
+    min-height: calc(100vh - 56px);
+    display: grid;
+    place-items: center;
+}

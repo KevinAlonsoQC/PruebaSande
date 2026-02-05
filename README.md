@@ -1,59 +1,237 @@
-# PruebaSande
+````md
+# PruebaSande — Angular (Login, Contactos, Token local y Perfiles)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+Proyecto Angular (Standalone + Routing) para la prueba técnica:
+- Login contra API entregada
+- Token generado en Angular y guardado en `localStorage`
+- AuthGuard + PerfilGuard
+- HttpInterceptor (Authorization: Bearer <token>)
+- CRUD de contactos con permisos por perfil
 
-## Development server
+---
 
-To start a local development server, run:
+## ✅ Requisitos previos
+
+### 1) Instalar Node.js
+- Recomendado: **Node 18+**
+
+Verifica versiones:
+```bash
+node -v
+npm -v
+````
+
+### 2) Instalar Angular CLI
+
+```bash
+npm install -g @angular/cli
+```
+
+Verifica:
+
+```bash
+ng version
+```
+
+---
+
+## 🚀 Instalación y ejecución (paso a paso)
+
+### 1) Clonar / descargar el proyecto
+
+Coloca el proyecto en tu equipo y entra a la carpeta:
+
+**Windows (CMD / PowerShell):**
+
+```bash
+cd C:\Users\TU_USUARIO\Desktop\pruebaSande
+```
+
+### 2) Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3) Configurar API Base URL
+
+Verifica el archivo:
+
+`src/environments/environment.ts`
+
+Debe existir y contener:
+
+```ts
+export const environment = {
+  apiBase: 'https://sandeonline.cl:2082/taskfocus/maestros/api/Test'
+};
+```
+
+### 4) Levantar el proyecto en local
+
+```bash
+ng serve -o
+```
+
+La app se abre en:
+
+* [http://localhost:4200](http://localhost:4200)
+
+---
+
+## 🔐 Credenciales y perfiles
+
+| Usuario  | Clave | Perfil | Permisos                     |
+| -------- | ----- | ------ | ---------------------------- |
+| admin    | 123   | 1      | Crear / Modificar / Eliminar |
+| crea     | 123   | 2      | Crear / Modificar            |
+| consulta | 123   | 3      | Solo lectura                 |
+
+---
+
+## 🧭 Rutas
+
+* `/login` (pública)
+* `/contactos` (protegida)
+* `/contactos/nuevo` (protegida + perfil 1/2)
+* `/contactos/:id/editar` (protegida + perfil 1/2)
+
+---
+
+## 🧠 Reglas de negocio implementadas
+
+### Token (Angular)
+
+La API **no entrega token**.
+
+Luego del login:
+
+* Se toma el primer elemento del arreglo de respuesta
+* Se genera un token local (UUID / fallback)
+* Se guarda sesión en `localStorage`
+
+**Claves usadas en localStorage:**
+
+* `auth_token`
+* `idUsuario`
+* `perfil`
+
+### Perfiles
+
+* Perfil 1: puede crear/editar/eliminar
+* Perfil 2: puede crear/editar
+* Perfil 3: solo lectura
+
+## 🔌 Endpoints usados
+
+**Login**
+
+* POST: `/Login`
+* Body:
+
+```json
+{ "usuario": "admin", "clave": "123" }
+```
+
+**Listar contactos**
+
+* GET: `/ListarContactos/{idUsuario}`
+
+**Detalle contacto (editar)**
+
+* GET: `/ListaContacto/{idUsuario}/{idContacto}`
+
+**Crear contacto**
+
+* POST: `/CreaContacto`
+
+**Modificar contacto**
+
+* POST: `/UpdateContacto`
+
+**Eliminar contacto**
+
+* POST: `/DeleteContacto`
+
+---
+
+## 🧱 Arquitectura del proyecto
+
+### Core
+
+* `core/services`
+
+  * `AuthService` (login + session)
+  * `ContactosService` (CRUD contactos)
+  * `UtilsService` (localStorage + navegación + limpieza)
+* `core/guards`
+
+  * `AuthGuard` (bloquea si no hay token)
+  * `PerfilGuard` (solo perfil 1/2 en nuevo/editar)
+* `core/interceptors`
+
+  * `AuthInterceptor` (inyecta Authorization Bearer)
+
+### Herencia (obligatorio)
+
+* `ApiService` (abstract)
+
+  * Maneja requests + headers + errores
+  * Es extendido por `AuthService` y `ContactosService`
+
+---
+
+## 🧪 Pruebas rápidas
+
+1. Ejecuta:
+
+```bash
+ng serve -o
+```
+
+2. Entra a:
+
+* `/login`
+
+3. Prueba los usuarios:
+
+* `admin / 123` → verás Nuevo/Editar/Eliminar
+* `crea / 123` → verás Nuevo/Editar
+* `consulta / 123` → solo lectura (sin botones de acción)
+
+---
+
+## 🛠️ Comandos útiles
+
+### Servidor de desarrollo
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Build producción
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Tests (si aplica)
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## ⚠️ Problemas comunes
 
-```bash
-ng e2e
+Ninguno registrado.
+
+---
+
+## 📌 Nota
+
+Este proyecto está enfocado en cumplir los requisitos obligatorios de la prueba:
+Angular + Routing + Guards + Interceptor + LocalStorage + CRUD + Permisos por Perfil + Herencia real.
+
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

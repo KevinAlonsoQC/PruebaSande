@@ -1,0 +1,41 @@
+<div class="container center">
+    <div class="card" style="width: min(460px, 100%);">
+        <div class="card__header">
+            <div>
+                <h1 class="title">PruebaSande</h1>
+                <p class="subtitle">Ingresa con tus credenciales para administrar contactos</p>
+            </div>
+            <span class="badge">Angular 18</span>
+        </div>
+
+        <div class="card__body">
+            <form class="stack" [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="field">
+                    <label class="label">Usuario</label>
+                    <input class="input" formControlName="usuario" placeholder="Nombre de Usuario" />
+                    <p class="error" *ngIf="form.controls.usuario.touched && form.controls.usuario.invalid">
+                        Usuario requerido
+                    </p>
+                </div>
+
+                <div class="field">
+                    <label class="label">Clave</label>
+                    <input class="input" type="password" formControlName="clave" placeholder="Password" />
+                    <p class="error" *ngIf="form.controls.clave.touched && form.controls.clave.invalid">
+                        Clave requerida
+                    </p>
+                </div>
+
+                <button class="btn btn--primary" type="submit" [disabled]="form.invalid || loading">
+                    {{ loading ? 'Ingresando…' : 'Ingresar' }}
+                </button>
+
+                <p class="error" *ngIf="error">{{ error }}</p>
+
+                <p class="help">
+                    Perfiles: <b>1</b> crea/edita/elimina · <b>2</b> crea/edita · <b>3</b> solo lectura
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
