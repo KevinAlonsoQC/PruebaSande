@@ -1,4 +1,3 @@
-````md
 # PruebaSande — Angular (Login, Contactos, Token local y Perfiles)
 
 Proyecto Angular (Standalone + Routing) para la prueba técnica:
